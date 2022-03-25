@@ -1,15 +1,15 @@
 
 import { useState, useEffect } from 'react'
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"
+import { formatRFC3339 } from 'date-fns'
+import Alert from '@mui/material/Alert'
 
 import { PageHeader } from '../../components/PageHeader'
 import { Input } from '../../components/Input'
 import { Select } from '../../components/Select'
-import { api } from '../../services/api'
 import { Datepicker } from '../../components/Datepicker'
 
-import { formatRFC3339 } from 'date-fns'
-import Alert from '@mui/material/Alert';
+import { api } from '../../services/api'
 
 import { Container, Content } from './styles'
 
@@ -24,7 +24,7 @@ export function Main () {
     observacoes: '',
    };
 
-  const { handleSubmit, formState: { errors }, control, reset } = useForm({ defaultValues });
+  const { handleSubmit, formState: { errors }, control } = useForm({ defaultValues });
 
   const [minDateFinal, setMinDateFinal] = useState(null)
   const [properties, setProperties] = useState([])
@@ -40,8 +40,8 @@ export function Main () {
   }
 
   const onSubmit = (data) => {
-    const property = properties.filter(prop => Number(prop.id) === Number(data.infosPropriedade))[0]
-    const lab = laboratories.filter(prop => Number(prop.id) === Number(data.laboratorio))[0]
+    const [property] = properties.filter(prop => Number(prop.id) === Number(data.infosPropriedade))
+    const [lab] = laboratories.filter(prop => Number(prop.id) === Number(data.laboratorio))
 
     const payload = {
       ...data,
@@ -57,15 +57,15 @@ export function Main () {
         nome: lab.name
       }
     }
-    console.log(payload)
+
     setUi({ isSuccessAlertVisible: true, isSuccessAlertError: false })
-    reset(defaultValues);
+    console.log(payload)
   }
 
   useEffect(() => {
     api.get('properties')
       .then( response => {
-       const formatted =  response.data.properties.map( property => ({
+        const formatted =  response.data.properties.map( property => ({
           ...property,
           subtitle: `CNPJ ${property.cnpj}`
         }))
@@ -73,7 +73,7 @@ export function Main () {
       })
 
       api.get('laboratories')
-      .then( response => setLaboratories(response.data.laboratories))
+      .then(response => setLaboratories(response.data.laboratories))
   }, [])
 
   return (
@@ -145,21 +145,27 @@ export function Main () {
               required={false}
             />
           </div>
-          {ui.isErrorAlertVisible ? (<Alert 
-            style={{maxWidth: 325, margin: '0 auto'}}
-            severity="error" 
-            variant="filled"
-            onClose={() => setUi({...ui, isErrorAlertVisible: false})}>
+          {ui.isErrorAlertVisible ? (
+            <Alert 
+              style={{maxWidth: 325, margin: '0 auto'}}
+              severity="error" 
+              variant="filled"
+              onClose={() => setUi({...ui, isErrorAlertVisible: false})}
+            >
               Preencha os campos obrigatórios
-            </Alert>) : null}
+            </Alert>
+          ) : null}
 
-            {ui.isSuccessAlertVisible ? (<Alert 
-            style={{maxWidth: 325, margin: '0 auto'}}
-            severity="success" 
-            variant="filled"
-            onClose={() => setUi({...ui, isSuccessAlertVisible: false})}>
-              Cadastro realizado com sucesso!
-            </Alert>) : null}
+            {ui.isSuccessAlertVisible ? (
+              <Alert 
+                style={{maxWidth: 325, margin: '0 auto'}}
+                severity="success" 
+                variant="filled"
+                onClose={() => setUi({...ui, isSuccessAlertVisible: false})}
+              >
+                Cadastro realizado com sucesso!
+              </Alert>
+            ) : null}
         </Content>
       </form>
      
