@@ -24,7 +24,7 @@ export function Main () {
     observacoes: '',
    };
 
-  const { handleSubmit, formState: { errors }, control } = useForm({defaultValues});
+  const { handleSubmit, formState: { errors }, control, reset } = useForm({ defaultValues });
 
   const [minDateFinal, setMinDateFinal] = useState(null)
   const [properties, setProperties] = useState([])
@@ -58,7 +58,8 @@ export function Main () {
       }
     }
     console.log(payload)
-    setUi({isSuccessAlertVisible: true, isSuccessAlertError: false})
+    setUi({ isSuccessAlertVisible: true, isSuccessAlertError: false })
+    reset(defaultValues);
   }
 
   useEffect(() => {
