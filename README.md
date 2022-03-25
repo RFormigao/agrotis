@@ -17,3 +17,10 @@ Para executar o projeto, siga os passos abaixo:
 
 - Inicie o servidor:
   `npm start` ou `yarn start`
+
+Bibliotecas utilizadas:
+- [React](https://reactjs.org/)
+- [Material Ui](https://material-ui.com/)
+- [Styled Components](https://www.styled-components.com/)
+- [Mirage JS](https://www.miragejs.com/)
+- [React Hook Forms](https://react-hook-form.com/)
