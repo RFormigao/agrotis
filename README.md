@@ -3,9 +3,11 @@
 Projeto de teste para o Agrotis.
 
 Para executar o projeto, siga os passos abaixo:
-- Clone o repositório do projeto: 
-  `git clone git@github.com:RFormigao/agrotis.git` - SSH
-  `git clone https://github.com/RFormigao/agrotis.git` - HTTPS
+- Clone o repositório do projeto:
+
+  `git clone git@github.com:RFormigao/agrotis.git`
+  ou
+  `git clone https://github.com/RFormigao/agrotis.git`
 
 - Entre no diretório do projeto:
   `cd agrotis`
